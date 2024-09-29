@@ -4,6 +4,8 @@ import android.app.Application
 import android.location.Location
 import android.telephony.SmsManager
 import android.widget.Toast
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -16,8 +18,17 @@ class SOSViewModel(application: Application) : AndroidViewModel(application) {
     private val context = getApplication<Application>().applicationContext
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
+
+    private val emergencyNumber = mutableStateOf("")
+
     // Store whether fine location permission was granted
     private var isFineLocationGranted: Boolean = false
+
+
+    fun updateSos(sosContact:TextFieldValue)
+    {
+        emergencyNumber.value=sosContact.toString()
+    }
 
     // Initialize location services based on permissions
     fun initializeLocationService(fineLocationGranted: Boolean) {
@@ -72,11 +83,10 @@ class SOSViewModel(application: Application) : AndroidViewModel(application) {
     private fun sendSOSMessage(location: Location, onSuccess: () -> Unit, onFailure: (String) -> Unit) {
         try {
             val smsManager: SmsManager = SmsManager.getDefault()
-            val emergencyNumber = "9076787407" // Replace with actual emergency contact number
-            val message = "SOS! I'm at Latitude: ${location.latitude}, Longitude: ${location.longitude}"
+            val message = "KangtoApp: SOS! I'm at Latitude: ${location.latitude}, Longitude: ${location.longitude}"
 
             // Send SMS
-            smsManager.sendTextMessage(emergencyNumber, null, message, null, null)
+            smsManager.sendTextMessage(emergencyNumber.toString(), null, message, null, null)
 
             // Show success message
             Toast.makeText(context, "SOS Message Sent!", Toast.LENGTH_SHORT).show()
