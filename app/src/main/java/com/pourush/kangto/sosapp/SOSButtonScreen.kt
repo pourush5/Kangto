@@ -56,7 +56,7 @@ fun SOSButtonScreen(sosViewModel: SOSViewModel = viewModel()) {
             Toast.makeText(context, "Call permission denied!", Toast.LENGTH_SHORT).show()
         }
     }
-    var sosContact by remember { mutableStateOf(TextFieldValue("")) }
+    var sosContact by remember { mutableStateOf(TextFieldValue(sosViewModel.emergencyNumber.value)) }
     var isPhoneNumberValid by remember { mutableStateOf(true) } // State to track if the phone number is valid
     //Description
     Card(backgroundColor = colorResource(R.color.teal_700),
