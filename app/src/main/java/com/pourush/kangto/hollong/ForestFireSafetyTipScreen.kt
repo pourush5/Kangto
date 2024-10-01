@@ -51,6 +51,7 @@ fun ForestFireSafetyTipsScreen() {
     val context = LocalContext.current
     val uriHandler = LocalUriHandler.current
 
+    //Annotating URL Text
     val annotatedText = buildAnnotatedString {
         append("Source: ")
         pushStringAnnotation(tag = "URL", annotation = "https://sdma-arunachal.in/forest-fire/")
