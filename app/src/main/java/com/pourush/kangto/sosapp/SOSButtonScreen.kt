@@ -68,7 +68,7 @@ fun SOSButtonScreen(sosViewModel: SOSViewModel = viewModel()) {
             Spacer(modifier=Modifier.height(20.dp))
             Column {
                 Text(
-                    "Need Support? Share your precise location to SOS contact.\n\n" +
+                    "Need Help? Share your precise location to SOS contact.\n\n" +
                             "सहायता चाहिए ? अभी अपना सटीक स्थान SOS contact से साझा करें।\n\n(+91)\n",
                     fontSize = 20.sp,
                     color = Color.White
