@@ -19,7 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.pourush.kangto.hollong.ForestFireSafetyTipsScreen
+import com.pourush.kangto.hollong.HollongApp
 
 
 class MainActivity : ComponentActivity() {
@@ -61,7 +61,7 @@ class MainActivity : ComponentActivity() {
         )
 
         setContent {
-            ForestFireSafetyTipsScreen()
+            HollongApp()
         }
     }
 }
