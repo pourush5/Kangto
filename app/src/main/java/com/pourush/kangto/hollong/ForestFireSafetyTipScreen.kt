@@ -30,9 +30,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 
 @Composable
-fun ForestFireSafetyTipsScreen() {
+fun ForestFireSafetyTipsScreen(navController: NavController) {
     val tips = listOf(
         "1. Try to maintain FOREST BLOCKS to prevent day litter from forests during summer season.",
         "2. Try to put the fire out by digging or circle around it by water, if not possible to call a Fire bridge.",
@@ -52,9 +53,9 @@ fun ForestFireSafetyTipsScreen() {
     //Annotating URL Text
     val annotatedText = buildAnnotatedString {
         append("Source: ")
-        pushStringAnnotation(tag = "URL", annotation = "https://sdma-arunachal.in/forest-fire/")
+        pushStringAnnotation(tag = "URL", annotation = "https://cdn.s3waas.gov.in/s39a1158154dfa42caddbd0694a4e9bdc8/uploads/2020/11/2020110975.pdf")
         withStyle(style = SpanStyle(color = Color.Blue)) {
-            append("https://sdma-arunachal.in/forest-fire/")
+            append("https://cdn.s3waas.gov.in/s39a1158154dfa42caddbd0694a4e9bdc8/uploads/2020/11/2020110975.pdf")
         }
         pop()
     }
@@ -83,12 +84,20 @@ fun ForestFireSafetyTipsScreen() {
                     Text(
                         text = annotatedText,
                         modifier = Modifier.clickable {
-                            uriHandler.openUri("https://sdma-arunachal.in/forest-fire/")  // Opens the URL when clicked
+                            // Extracting the URL from the annotation
+                            annotatedText.getStringAnnotations(tag = "URL", start = 0, end = annotatedText.length)
+                                .firstOrNull()?.let { annotation ->
+                                    uriHandler.openUri(annotation.item) // Dynamically opening the URL
+                                }
                         },
                         fontSize = 18.sp
                     )
-                    Text("State Disaster Management Authority Government of Arunachal Pradesh ",style = TextStyle(
-                        fontSize = 24.sp,
+                    Text("Department of Disaster Management",style = TextStyle(
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        textAlign = TextAlign.Center),modifier=Modifier.padding(10.dp).align(Alignment.Center))
+                    Text("Government of Arunachal Pradesh ",style = TextStyle(
+                        fontSize = 22.sp,
                         fontWeight = FontWeight.SemiBold,
                         textAlign = TextAlign.Center),modifier=Modifier.padding(10.dp).align(Alignment.Center))
                 }

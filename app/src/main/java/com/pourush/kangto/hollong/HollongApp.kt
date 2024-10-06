@@ -30,12 +30,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.pourush.kangto.R
+import com.pourush.kangto.Screen
 import kotlin.random.Random
 import androidx.compose.ui.graphics.Color as ComposeColor
 
 @Composable
-fun HollongApp() {
+fun HollongApp(navController: NavController) {
     val context = LocalContext.current
     // SharedPreferences to store the hollong score
     val sharedPrefs: SharedPreferences = context.getSharedPreferences("hollong_score_prefs", Context.MODE_PRIVATE)
@@ -200,7 +202,7 @@ fun HollongApp() {
             }
         }
         }
-        Button(onClick={})
+        Button(onClick={navController.navigate(Screen.ForestFireTipScreen.route)})
         {
             Text("Forest Fire Safety Tips")
         }

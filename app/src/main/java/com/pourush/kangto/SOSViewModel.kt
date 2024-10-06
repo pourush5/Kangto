@@ -9,6 +9,8 @@ import android.widget.Toast
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -26,7 +28,7 @@ class SOSViewModel(application: Application) : AndroidViewModel(application) {
     var emergencyNumber = mutableStateOf("")
 
     init {
-        // Load the persisted SOS contact from SharedPreferences when the ViewModel is created
+        // Loading the persisted SOS contact from SharedPreferences when the ViewModel is created
         emergencyNumber.value = sharedPreferences.getString("sosContact", "") ?: ""
     }
 
@@ -91,8 +93,19 @@ class SOSViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    // Initialize location services based on permissions
+    // Initialising location services based on permissions
     fun initializeLocationService(fineLocationGranted: @JvmSuppressWildcards Boolean) {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
+    }
+}
+
+//Creating ViewModel Factory class to inject Application context
+class SOSViewModelFactory(private val application: Application) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(SOSViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return SOSViewModel(application) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }
