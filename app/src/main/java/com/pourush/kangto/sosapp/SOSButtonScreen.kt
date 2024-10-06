@@ -38,12 +38,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.pourush.kangto.R
 import com.pourush.kangto.SOSViewModel
+import com.pourush.kangto.Screen
 
 
 @Composable
-fun SOSButtonScreen(sosViewModel: SOSViewModel = viewModel()) {
+fun SOSButtonScreen(sosViewModel: SOSViewModel = viewModel(),navController: NavController) {
     val context = LocalContext.current
     // Permission launcher for CALL_PHONE permission
     val requestPermissionLauncher = rememberLauncherForActivityResult(
@@ -171,6 +173,14 @@ fun SOSButtonScreen(sosViewModel: SOSViewModel = viewModel()) {
                 .padding(16.dp)
         ) {
             Text(text = "Call Disaster Emergency (1070)",fontSize = 20.sp)
+        }
+        Button(
+            onClick = {navController.navigate(Screen.HollongAppScreen.route)},
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+            Text(text = "Hollong App",fontSize = 20.sp)
         }
     }
 }

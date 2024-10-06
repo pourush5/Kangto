@@ -19,7 +19,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.pourush.kangto.hollong.HollongApp
 
 
 class MainActivity : ComponentActivity() {
@@ -61,7 +60,7 @@ class MainActivity : ComponentActivity() {
         )
 
         setContent {
-            HollongApp()
+            Navigation()
         }
     }
 }
@@ -82,21 +81,6 @@ fun KangtoApp()
         }
     }
 }
-@Composable
-fun HomeScreen()
-{
-    Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center,
-        modifier = Modifier.fillMaxWidth())
-    {
-        Text(text = "Welcome To Kangto", style = MaterialTheme.typography.titleMedium)
-        Spacer(modifier = Modifier.height(10.dp))
-        Text("Inspired by the Dawn-Lit Mountain Province",style=MaterialTheme.typography.titleSmall)
-        Spacer(modifier = Modifier.height(10.dp))
-        Button(onClick = { /*TODO*/ })
-        {
-            Text(text = "Press to Explore")
-        }
-    }
-}
+
 
 
