@@ -48,7 +48,6 @@ import androidx.navigation.NavController
 import com.pourush.kangto.AppBarView
 import com.pourush.kangto.R
 import com.pourush.kangto.SOSViewModel
-import com.pourush.kangto.Screen
 
 
 @Composable
@@ -210,19 +209,6 @@ fun SOSButtonScreen(sosViewModel: SOSViewModel = viewModel(),navController: NavC
                 ), border = BorderStroke(3.dp, colorResource(id = R.color.light_green))
             ) {
                 Text(text = "Disaster Emergency (1070)", fontSize = 20.sp)
-            }
-            Spacer(modifier = Modifier.height(20.dp))
-            Button(
-                onClick = { navController.navigate(Screen.HollongAppScreen.route) },
-                modifier = Modifier
-                    .width(200.dp)
-                    .height(50.dp),
-                colors = ButtonDefaults.buttonColors(
-                    contentColor = Color.White,
-                    containerColor = colorResource(id = R.color.forest_essence)
-                ), border = BorderStroke(3.dp, colorResource(id = R.color.light_green))
-            ) {
-                Text(text = "Hollong App", fontSize = 20.sp)
             }
             Spacer(modifier = Modifier.weight(1f))
 

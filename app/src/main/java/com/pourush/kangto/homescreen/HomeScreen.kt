@@ -46,9 +46,9 @@ fun HomeScreen(navController: NavController)
     {
         Spacer(modifier = Modifier.weight(2f))
         Image(painter= painterResource(id = R.drawable.kangto_appicon),
-            contentDescription = "Kangto_logo")
+            contentDescription = "Kangto_logo",modifier=Modifier.size(200.dp))
         Spacer(modifier = Modifier.height(10.dp))
-        Text("Inspired by the Land of Dawn-Lit Mountains",style= MaterialTheme.typography.titleSmall,fontFamily = FontFamily.Cursive)
+        Text("Inspired by the Land of Dawn-Lit Mountains",style= MaterialTheme.typography.titleMedium,fontFamily = FontFamily.Cursive)
         Spacer(modifier = Modifier.height(10.dp))
         Text("Arunachal Pradesh",style= MaterialTheme.typography.titleLarge,fontFamily = FontFamily.Cursive)
         Spacer(modifier = Modifier.weight(1f))
@@ -91,6 +91,7 @@ fun HomeScreen(navController: NavController)
                     .size(70.dp)
                     .align(Alignment.CenterVertically)
             )
+            Text(text = "An initiative by Pourush Pandey", fontFamily = FontFamily.Cursive, modifier=Modifier.padding(16.dp).align(Alignment.CenterVertically))
             Image(
                 painter = painterResource(id = R.drawable.logo_pourush),
                 contentDescription = "Pourush_logo_graphic",
@@ -99,7 +100,6 @@ fun HomeScreen(navController: NavController)
                     .align(Alignment.CenterVertically)
             )
         }
-    Text(text = "An initiative by Pourush Pandey", fontFamily = FontFamily.Cursive, modifier=Modifier.padding(16.dp))
 
     }
 }
