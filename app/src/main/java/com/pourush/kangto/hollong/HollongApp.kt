@@ -7,16 +7,21 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
 import androidx.compose.material.IconButton
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -35,6 +40,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.pourush.kangto.AppBarView
 import com.pourush.kangto.R
 import com.pourush.kangto.Screen
 import kotlin.random.Random
@@ -44,7 +50,8 @@ import androidx.compose.ui.graphics.Color as ComposeColor
 fun HollongApp(navController: NavController) {
     val context = LocalContext.current
     // SharedPreferences to store the hollong score
-    val sharedPrefs: SharedPreferences = context.getSharedPreferences("hollong_score_prefs", Context.MODE_PRIVATE)
+    val sharedPrefs: SharedPreferences =
+        context.getSharedPreferences("hollong_score_prefs", Context.MODE_PRIVATE)
     var greenScore by remember { mutableStateOf(sharedPrefs.getInt("hollongScore", 0)) }
 
     // A mutable state for background color of the CardView
@@ -57,166 +64,182 @@ fun HollongApp(navController: NavController) {
         backgroundColor = randomColor() // Change background color on each increment
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp).background(color=backgroundColor),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        //Description of Buttons to increment Hollong Score
-        Card(
-            shape = RoundedCornerShape(16.dp),
-            backgroundColor = Color.White,
-            modifier = Modifier
-                .padding(5.dp),
-            elevation = 8.dp
+    val scaffoldState = rememberScaffoldState()
+    Scaffold(
+        backgroundColor = backgroundColor,
+        scaffoldState = scaffoldState,
+        topBar = {
+            AppBarView(title = "Hollong App",
+                onBackNavClicked = { navController.navigateUp() })
+        },
+
+
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.tree_24dp),
-                    contentDescription = "Planted a Tree",
-                    tint = colorResource(id = R.color.forest_essence)
-                )
-                Text("Tap this below if planted a Tree! | वृक्षारोपण करने पर नीचे इसे टैप करें।")
-
-            }
-        }
-        Card(
-            shape = RoundedCornerShape(16.dp),
-            backgroundColor = Color.White,
+        Column(
             modifier = Modifier
-                .padding(5.dp),
-            elevation = 8.dp
+                .fillMaxSize()
+                .padding(it).background(color = backgroundColor)
+                .verticalScroll(rememberScrollState()),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.report_24dp),
-                    contentDescription = "Reported Forest Danger",
-                    tint = colorResource(id = R.color.report_danger)
-                )
-                Text("Reported a forest danger (invasive species,forest fire,water pollution,etc.) to concerned authorities? Tap this below! | वन संकट (आक्रामक उपजाति, दावानल, जल प्रदूषण, इत्यादि) सही जगह सूचित करने पर नीचे इसे टैप करें। ")
-
-            }
-        }
-        Card(
-            shape = RoundedCornerShape(16.dp),
-            backgroundColor = Color.White,
-            modifier = Modifier
-                .padding(5.dp),
-            elevation = 8.dp
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.recycle_24dp),
-                    contentDescription = "Recycled",
-                    tint = colorResource(id = R.color.teal_700)
-                )
-                Text("Tap this below if recycled an item! | किसी पुनर्चक्रण योग्य वस्तु का पुनः उपयोग करने पर नीचे इसे टैप करें। ")
-
-            }
-
-        }
-        // Display Hollong Score inside a CardView with dynamic background color
-        Card(
-            shape = RoundedCornerShape(16.dp),
-            backgroundColor = Color.White,
-            modifier = Modifier
-                .padding(16.dp),
-            elevation = 8.dp
-        ) {
-
+            Spacer(modifier=Modifier.height(20.dp))
+            //Description of Buttons to increment Hollong Score
             Card(
                 shape = RoundedCornerShape(16.dp),
-                backgroundColor = colorResource(id = R.color.forest_essence),
+                backgroundColor = Color.White,
+                modifier = Modifier
+                    .padding(5.dp),
+                elevation = 8.dp
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.tree_24dp),
+                        contentDescription = "Planted a Tree",
+                        tint = colorResource(id = R.color.forest_essence)
+                    )
+                    Text("Tap this below if planted a Tree! | वृक्षारोपण करने पर नीचे इसे टैप करें।")
+
+                }
+            }
+            Card(
+                shape = RoundedCornerShape(16.dp),
+                backgroundColor = Color.White,
+                modifier = Modifier
+                    .padding(5.dp),
+                elevation = 8.dp
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.report_24dp),
+                        contentDescription = "Reported Forest Danger",
+                        tint = colorResource(id = R.color.report_danger)
+                    )
+                    Text("Reported a forest danger (invasive species,forest fire,water pollution,etc.) to concerned authorities? Tap this below! | वन संकट (आक्रामक उपजाति, दावानल, जल प्रदूषण, इत्यादि) सही जगह सूचित करने पर नीचे इसे टैप करें। ")
+
+                }
+            }
+            Card(
+                shape = RoundedCornerShape(16.dp),
+                backgroundColor = Color.White,
+                modifier = Modifier
+                    .padding(5.dp),
+                elevation = 8.dp
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.recycle_24dp),
+                        contentDescription = "Recycled",
+                        tint = colorResource(id = R.color.teal_700)
+                    )
+                    Text("Tap this below if recycled an item! | किसी पुनर्चक्रण योग्य वस्तु का पुनः उपयोग करने पर नीचे इसे टैप करें। ")
+
+                }
+
+            }
+            // Display Hollong Score inside a CardView with dynamic background color
+            Card(
+                shape = RoundedCornerShape(16.dp),
+                backgroundColor = Color.White,
+                modifier = Modifier
+                    .padding(16.dp),
+                elevation = 8.dp
+            ) {
+
+                Card(
+                    shape = RoundedCornerShape(16.dp),
+                    backgroundColor = colorResource(id = R.color.forest_essence),
+                    modifier = Modifier
+                        .padding(25.dp),
+                    elevation = 8.dp
+                ) {
+                    Text(
+                        text = "Hollong Score: $greenScore",
+                        modifier = Modifier.padding(24.dp),
+                        fontSize = 24.sp,
+                        color = Color.White,
+                        textAlign = TextAlign.Center
+                    )
+                }
+            }
+            Card(
+                shape = RoundedCornerShape(16.dp),
+                backgroundColor = Color.White,
                 modifier = Modifier
                     .padding(25.dp),
                 elevation = 8.dp
-            ){
-            Text(
-                text = "Hollong Score: $greenScore",
-                modifier = Modifier.padding(24.dp),
-                fontSize = 24.sp,
-                color = Color.White,
-                textAlign = TextAlign.Center
-            )
+            ) {
+                //Row containing actionables to increment Hollong Score
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    IconButton(
+                        onClick = { incrementScore() },
+                    )
+                    {
+                        Icon(
+                            modifier = Modifier.size(48.dp),
+                            painter = painterResource(id = R.drawable.tree_24dp),
+                            contentDescription = "Planted a Tree",
+                            tint = colorResource(id = R.color.forest_essence)
+                        )
+                    }
+                    IconButton(
+                        onClick = { incrementScore() },
+                    )
+                    {
+                        Icon(
+                            modifier = Modifier.size(48.dp),
+                            painter = painterResource(id = R.drawable.report_24dp),
+                            contentDescription = "Reported Forest Danger",
+                            tint = colorResource(id = R.color.report_danger)
+                        )
+                    }
+                    IconButton(
+                        onClick = { incrementScore() },
+                    )
+                    {
+                        Icon(
+                            modifier = Modifier.size(48.dp),
+                            painter = painterResource(id = R.drawable.recycle_24dp),
+                            contentDescription = "Recycled",
+                            tint = colorResource(id = R.color.teal_700)
+                        )
+                    }
+                }
             }
-        }
-        Card(
-            shape = RoundedCornerShape(16.dp),
-            backgroundColor = Color.White,
-            modifier = Modifier
-                .padding(25.dp),
-            elevation = 8.dp
-        ){
-        //Row containing actionables to increment Hollong Score
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            IconButton(
-                onClick = { incrementScore() },
+            Button(
+                onClick = { navController.navigate(Screen.ForestFireTipScreen.route) },
+                modifier = Modifier
+                    .width(300.dp)
+                    .height(50.dp),
+                colors = ButtonDefaults.buttonColors(
+                    contentColor = Color.White,
+                    containerColor = colorResource(id = R.color.forest_essence)
+                ), border = BorderStroke(3.dp, colorResource(id = R.color.light_green))
             )
             {
-                Icon(
-                    modifier=Modifier.size(48.dp),
-                    painter = painterResource(id = R.drawable.tree_24dp),
-                    contentDescription = "Planted a Tree",
-                    tint = colorResource(id = R.color.forest_essence)
-                )
+                Text("Forest Fire Safety Tips", fontSize = 20.sp, color = Color.White)
             }
-            IconButton(
-                onClick = { incrementScore() },
-            )
-            {
-                Icon(
-                    modifier=Modifier.size(48.dp),
-                    painter = painterResource(id = R.drawable.report_24dp),
-                    contentDescription = "Reported Forest Danger",
-                    tint = colorResource(id = R.color.report_danger)
-                )
-            }
-            IconButton(
-                onClick = { incrementScore() },
-            )
-            {
-                Icon(
-                    modifier=Modifier.size(48.dp),
-                    painter = painterResource(id = R.drawable.recycle_24dp),
-                    contentDescription = "Recycled",
-                    tint = colorResource(id = R.color.teal_700)
-                )
-            }
-        }
-        }
-        Button(onClick={navController.navigate(Screen.ForestFireTipScreen.route)},
-            modifier= Modifier
-                .width(300.dp)
-                .height(50.dp),
-            colors = ButtonDefaults.buttonColors(
-                contentColor = Color.White,
-                containerColor = colorResource(id = R.color.forest_essence)
-            ),border = BorderStroke(3.dp, colorResource(id = R.color.light_green))
-        )
-        {
-            Text("Forest Fire Safety Tips",fontSize = 20.sp,color=Color.White)
+            Spacer(modifier=Modifier.height(50.dp))
         }
     }
 }

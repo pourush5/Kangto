@@ -12,7 +12,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Scaffold
-import androidx.compose.material.TopAppBar
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -32,6 +32,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.pourush.kangto.AppBarView
 import com.pourush.kangto.R
 
 @Composable
@@ -61,15 +62,15 @@ fun ForestFireSafetyTipsScreen(navController: NavController) {
         }
         pop()
     }
+    val scaffoldState = rememberScaffoldState()
     Scaffold(
+        backgroundColor = colorResource(id = R.color.forest_essence),
+        scaffoldState = scaffoldState,
         topBar = {
-            TopAppBar(
-                title = { Text("Forest Fire Safety Tips", fontSize = 24.sp, fontWeight = FontWeight.Bold) },
-                backgroundColor = Color(0xFF2E7D32),
-                contentColor = Color.White
-            )
-        }
-    ) { paddingValues ->
+            AppBarView(title = "Forest Fire Safety Tips",
+                onBackNavClicked = { navController.navigateUp() })
+        },
+        ) { paddingValues ->
         Box(
             modifier = Modifier
                 .padding(paddingValues)
