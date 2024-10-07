@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -31,6 +32,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.pourush.kangto.R
 
 @Composable
 fun ForestFireSafetyTipsScreen(navController: NavController) {
@@ -72,7 +74,14 @@ fun ForestFireSafetyTipsScreen(navController: NavController) {
             modifier = Modifier
                 .padding(paddingValues)
                 .fillMaxSize()
-                .background(brush = Brush.verticalGradient(listOf(Color(0xFFB2FF59), Color(0xFF76FF03))))
+                .background(
+                    brush = Brush.verticalGradient(
+                        listOf(
+                            colorResource(id = R.color.light_green),
+                            Color(0xFFB2FF59)
+                        )
+                    )
+                )
                 .padding(16.dp)
         ) {
             LazyColumn(
@@ -80,27 +89,6 @@ fun ForestFireSafetyTipsScreen(navController: NavController) {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
-                item{
-                    Text(
-                        text = annotatedText,
-                        modifier = Modifier.clickable {
-                            // Extracting the URL from the annotation
-                            annotatedText.getStringAnnotations(tag = "URL", start = 0, end = annotatedText.length)
-                                .firstOrNull()?.let { annotation ->
-                                    uriHandler.openUri(annotation.item) // Dynamically opening the URL
-                                }
-                        },
-                        fontSize = 18.sp
-                    )
-                    Text("Department of Disaster Management",style = TextStyle(
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        textAlign = TextAlign.Center),modifier=Modifier.padding(10.dp).align(Alignment.Center))
-                    Text("Government of Arunachal Pradesh ",style = TextStyle(
-                        fontSize = 22.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        textAlign = TextAlign.Center),modifier=Modifier.padding(10.dp).align(Alignment.Center))
-                }
                 item {
                     Text(
                         "Forest Fire Safety Tips",
@@ -115,6 +103,30 @@ fun ForestFireSafetyTipsScreen(navController: NavController) {
                 items(tips) { tip ->
                     TipCard(tip = tip)
                 }
+                item {
+                    Text("Department of Disaster Management",style = TextStyle(
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        textAlign = TextAlign.Center),modifier= Modifier
+                        .padding(10.dp)
+                        .align(Alignment.Center))
+                    Text("Government of Arunachal Pradesh ",style = TextStyle(
+                        fontSize = 22.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        textAlign = TextAlign.Center),modifier= Modifier
+                        .padding(10.dp)
+                        .align(Alignment.Center))
+                    Text(
+                    text = annotatedText,
+                    modifier = Modifier.clickable {
+                        // Extracting the URL from the annotation
+                        annotatedText.getStringAnnotations(tag = "URL", start = 0, end = annotatedText.length)
+                            .firstOrNull()?.let { annotation ->
+                                uriHandler.openUri(annotation.item) // Dynamically opening the URL
+                            }
+                    },
+                    fontSize = 18.sp
+                ) }
             }
         }
     }
@@ -125,7 +137,7 @@ fun TipCard(tip: String) {
     Card(
         shape = RoundedCornerShape(10.dp),
         modifier = Modifier.fillMaxWidth(),
-        backgroundColor = Color.White,
+        backgroundColor = colorResource(id = R.color.forest_essence),
         elevation=10.dp
     ) {
         Text(
@@ -135,7 +147,7 @@ fun TipCard(tip: String) {
                 fontFamily = FontFamily.Serif,
                 fontWeight = FontWeight.Medium,
                 textAlign = TextAlign.Start,
-                color = Color.Black
+                color = Color.White
             ),
             modifier = Modifier.padding(16.dp)
         )
