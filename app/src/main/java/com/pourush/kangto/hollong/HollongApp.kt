@@ -2,19 +2,23 @@ package com.pourush.kangto.hollong
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -202,9 +206,17 @@ fun HollongApp(navController: NavController) {
             }
         }
         }
-        Button(onClick={navController.navigate(Screen.ForestFireTipScreen.route)})
+        Button(onClick={navController.navigate(Screen.ForestFireTipScreen.route)},
+            modifier= Modifier
+                .width(300.dp)
+                .height(50.dp),
+            colors = ButtonDefaults.buttonColors(
+                contentColor = Color.White,
+                containerColor = colorResource(id = R.color.forest_essence)
+            ),border = BorderStroke(3.dp, colorResource(id = R.color.light_green))
+        )
         {
-            Text("Forest Fire Safety Tips")
+            Text("Forest Fire Safety Tips",fontSize = 20.sp,color=Color.White)
         }
     }
 }
