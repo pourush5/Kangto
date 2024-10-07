@@ -74,12 +74,12 @@ dependencies {
     implementation ("androidx.compose.ui:ui:1.0.5")
     implementation ("androidx.compose.material:material:1.0.5")
     implementation ("androidx.compose.ui:ui-tooling:1.0.5")
-    implementation ("org.osmdroid:osmdroid-android:6.1.10")
-    implementation ("com.squareup.retrofit2:converter-moshi:2.9.0")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.0")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.0")
     implementation ("androidx.datastore:datastore-preferences:1.1.1")
+    implementation ("androidx.fragment:fragment-ktx:1.3.0")
+
 
 
 
