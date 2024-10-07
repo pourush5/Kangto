@@ -7,4 +7,6 @@ sealed class Screen (val route:String)
     object ForestFireTipScreen:Screen("forest_tip_screen")
     object HollongAppScreen:Screen("hollong_app")
 
+    object HomeScreen:Screen("home_screen")
+
 }
