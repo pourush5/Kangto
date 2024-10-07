@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.pourush.kangto.hollong.ForestFireSafetyTipsScreen
 import com.pourush.kangto.hollong.HollongApp
+import com.pourush.kangto.homescreen.HomeScreen
 import com.pourush.kangto.sosapp.SOSButtonScreen
 
 @Composable
@@ -20,8 +21,12 @@ fun Navigation(navController: NavHostController =rememberNavController())
 
  // Creating the ViewModel using the factory
  val sosViewModel: SOSViewModel = viewModel(factory = SOSViewModelFactory(application))
- NavHost(navController = navController, startDestination = Screen.SOSButtonScreen.route)
+ NavHost(navController = navController, startDestination = Screen.HomeScreen.route)
  {
+  composable(Screen.HomeScreen.route){
+   HomeScreen(navController = navController)
+  }
+
   composable(Screen.HollongAppScreen.route)
   {
    HollongApp(navController)
