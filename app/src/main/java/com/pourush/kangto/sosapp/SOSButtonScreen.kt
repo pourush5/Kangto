@@ -20,8 +20,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.Scaffold
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
@@ -43,6 +45,7 @@ import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.pourush.kangto.AppBarView
 import com.pourush.kangto.R
 import com.pourush.kangto.SOSViewModel
 import com.pourush.kangto.Screen
@@ -69,139 +72,161 @@ fun SOSButtonScreen(sosViewModel: SOSViewModel = viewModel(),navController: NavC
     var sosTriggered by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf("") }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.Bottom,
-        horizontalAlignment = Alignment.CenterHorizontally
+    val scaffoldState= rememberScaffoldState()
+    Scaffold(
+        backgroundColor = Color.White,
+        scaffoldState=scaffoldState,
+        topBar = { AppBarView(title = "SOS!!",
+            onBackNavClicked = {navController.navigateUp()})
+        },
+
+
     ) {
-        //Description
-        Card(backgroundColor = colorResource(R.color.forest_essence),
-            elevation=10.dp,
-            shape= RoundedCornerShape(10.dp),
-            modifier = Modifier.padding(18.dp)
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(it),
+            verticalArrangement = Arrangement.Bottom,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Box(modifier = Modifier.padding(10.dp)) {
-                Spacer(modifier=Modifier.height(20.dp))
-                Column {
-                    Text(
-                        "Need Help? Share your precise location to SOS contact.\n\n" +
-                                "सहायता चाहिए ? अभी अपना सटीक स्थान SOS contact से साझा करें।\n\n(+91)\n",
-                        fontSize = 20.sp,
-                        color = Color.White
-                    )
-                    // TextField to update the SOS contact
-                    TextField(
-                        value = sosContact,
-                        onValueChange = { newValue ->
-                            // Allow only digits and restrict to 10 characters
-                            val filtered = newValue.text.filter { it.isDigit() }.take(10)
-
-                            // Update the TextField value, ensuring proper cursor behavior
-                            sosContact = newValue.copy(text = filtered)
-
-                            // Update the ViewModel with the filtered phone number when valid
-                            if (filtered.length == 10) {
-                                sosViewModel.updateSos(TextFieldValue(filtered))  // Update only with the valid 10-digit number
-                            }
-
-                            // Check if the input is a valid 10-digit number
-                            isPhoneNumberValid = filtered.length == 10
-                        },
-                        isError = !isPhoneNumberValid,
-                        modifier = Modifier.fillMaxWidth(),
-                        textStyle = TextStyle(fontSize = 18.sp),
-                        colors = TextFieldDefaults.textFieldColors(
-                            textColor = Color.Blue,
-                            backgroundColor = Color.White,
-                            cursorColor = Color.Blue,
-                            focusedIndicatorColor = colorResource(id = R.color.purple_700),
-                            unfocusedIndicatorColor = Color.Blue
-                        )
-                    )
-
-                    // Error message if the phone number is invalid
-                    if (!isPhoneNumberValid) {
+            //Description
+            Card(
+                backgroundColor = colorResource(R.color.forest_essence),
+                elevation = 10.dp,
+                shape = RoundedCornerShape(10.dp),
+                modifier = Modifier.padding(18.dp)
+            ) {
+                Box(modifier = Modifier.padding(10.dp)) {
+                    Spacer(modifier = Modifier.height(20.dp))
+                    Column {
                         Text(
-                            text = "Please enter a valid 10-digit phone number.",
-                            color = Color.Red,
-                            fontSize = 14.sp
+                            "Need Help? Share your precise location to SOS contact.\n\n" +
+                                    "सहायता चाहिए ? अभी अपना सटीक स्थान SOS contact से साझा करें।\n\n(+91)\n",
+                            fontSize = 20.sp,
+                            color = Color.White
                         )
+                        // TextField to update the SOS contact
+                        TextField(
+                            value = sosContact,
+                            onValueChange = { newValue ->
+                                // Allow only digits and restrict to 10 characters
+                                val filtered = newValue.text.filter { it.isDigit() }.take(10)
+
+                                // Update the TextField value, ensuring proper cursor behavior
+                                sosContact = newValue.copy(text = filtered)
+
+                                // Update the ViewModel with the filtered phone number when valid
+                                if (filtered.length == 10) {
+                                    sosViewModel.updateSos(TextFieldValue(filtered))  // Update only with the valid 10-digit number
+                                }
+
+                                // Check if the input is a valid 10-digit number
+                                isPhoneNumberValid = filtered.length == 10
+                            },
+                            isError = !isPhoneNumberValid,
+                            modifier = Modifier.fillMaxWidth(),
+                            textStyle = TextStyle(fontSize = 18.sp),
+                            colors = TextFieldDefaults.textFieldColors(
+                                textColor = Color.Blue,
+                                backgroundColor = Color.White,
+                                cursorColor = Color.Blue,
+                                focusedIndicatorColor = colorResource(id = R.color.purple_700),
+                                unfocusedIndicatorColor = Color.Blue
+                            )
+                        )
+
+                        // Error message if the phone number is invalid
+                        if (!isPhoneNumberValid) {
+                            Text(
+                                text = "Please enter a valid 10-digit phone number.",
+                                color = Color.Red,
+                                fontSize = 14.sp
+                            )
+                        }
                     }
                 }
             }
-        }
-        Spacer(modifier=Modifier.weight(1f))
-        // SOS Button
-        Button(
-            onClick = {
-                // Triggering SOS action from ViewModel
-                sosViewModel.triggerSOS(
-                    onSuccess = {
-                        sosTriggered = true // Successfully sent SOS message
-                    },
-                    onFailure = { error ->
-                        errorMessage = error // Failed to send SOS
-                    }
+            Spacer(modifier = Modifier.weight(1f))
+            // SOS Button
+            Button(
+                onClick = {
+                    // Triggering SOS action from ViewModel
+                    sosViewModel.triggerSOS(
+                        onSuccess = {
+                            sosTriggered = true // Successfully sent SOS message
+                        },
+                        onFailure = { error ->
+                            errorMessage = error // Failed to send SOS
+                        }
+                    )
+                },
+                modifier = Modifier
+                    .width(200.dp)
+                    .height(50.dp),
+                colors = ButtonDefaults.buttonColors(
+                    contentColor = Color.White,
+                    containerColor = colorResource(id = R.color.forest_essence)
+                ), border = BorderStroke(3.dp, colorResource(id = R.color.light_green))
+            ) {
+                Text(text = "Send SOS", fontSize = 20.sp)
+            }
+
+            // Displaying confirmation or error message
+            if (sosTriggered) {
+                Text(
+                    text = "SOS Message Sent!",
+                    fontSize = 25.sp,
+                    color = colorResource(id = R.color.teal_700),
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(15.dp)
                 )
-            },
-            modifier= Modifier
-                .width(200.dp)
-                .height(50.dp),
-            colors = ButtonDefaults.buttonColors(
-                contentColor = Color.White,
-                containerColor = colorResource(id = R.color.forest_essence)
-            ),border = BorderStroke(3.dp, colorResource(id = R.color.light_green))
-        ) {
-            Text(text = "Send SOS", fontSize = 20.sp)
-        }
+            } else if (errorMessage.isNotEmpty()) {
+                Text(text = errorMessage, fontSize = 16.sp, color = Color.Red)
+            }
+            Spacer(modifier = Modifier.height(20.dp))
 
-        // Displaying confirmation or error message
-        if (sosTriggered) {
-            Text(text = "SOS Message Sent!", fontSize = 25.sp, color = colorResource(id = R.color.teal_700),fontWeight= FontWeight.Bold,modifier=Modifier.padding(15.dp))
-        } else if (errorMessage.isNotEmpty()) {
-            Text(text = errorMessage, fontSize = 16.sp, color = Color.Red)
-        }
-        Spacer(modifier=Modifier.height(20.dp))
+            // Call Emergency Button
+            Button(
+                onClick = {
+                    // Check if the CALL_PHONE permission is granted
+                    if (ContextCompat.checkSelfPermission(
+                            context,
+                            Manifest.permission.CALL_PHONE
+                        ) ==
+                        PackageManager.PERMISSION_GRANTED
+                    ) {
+                        callEmergencyNumber(context)
+                    } else {
+                        // Request permission if not granted
+                        requestPermissionLauncher.launch(Manifest.permission.CALL_PHONE)
+                    }
+                },
+                modifier = Modifier
+                    .width(300.dp)
+                    .height(50.dp),
+                colors = ButtonDefaults.buttonColors(
+                    contentColor = Color.White,
+                    containerColor = colorResource(id = R.color.forest_essence)
+                ), border = BorderStroke(3.dp, colorResource(id = R.color.light_green))
+            ) {
+                Text(text = "Disaster Emergency (1070)", fontSize = 20.sp)
+            }
+            Spacer(modifier = Modifier.height(20.dp))
+            Button(
+                onClick = { navController.navigate(Screen.HollongAppScreen.route) },
+                modifier = Modifier
+                    .width(200.dp)
+                    .height(50.dp),
+                colors = ButtonDefaults.buttonColors(
+                    contentColor = Color.White,
+                    containerColor = colorResource(id = R.color.forest_essence)
+                ), border = BorderStroke(3.dp, colorResource(id = R.color.light_green))
+            ) {
+                Text(text = "Hollong App", fontSize = 20.sp)
+            }
+            Spacer(modifier = Modifier.weight(1f))
 
-        // Call Emergency Button
-        Button(
-            onClick = {
-                // Check if the CALL_PHONE permission is granted
-                if (ContextCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) ==
-                    PackageManager.PERMISSION_GRANTED) {
-                    callEmergencyNumber(context)
-                } else {
-                    // Request permission if not granted
-                    requestPermissionLauncher.launch(Manifest.permission.CALL_PHONE)
-                }
-            },
-            modifier= Modifier
-                .width(300.dp)
-                .height(50.dp),
-            colors = ButtonDefaults.buttonColors(
-                contentColor = Color.White,
-                containerColor = colorResource(id = R.color.forest_essence)
-            ),border = BorderStroke(3.dp, colorResource(id = R.color.light_green))
-        ) {
-            Text(text = "Disaster Emergency (1070)",fontSize = 20.sp)
         }
-        Spacer(modifier=Modifier.height(20.dp))
-        Button(
-            onClick = {navController.navigate(Screen.HollongAppScreen.route)},
-            modifier= Modifier
-                .width(200.dp)
-                .height(50.dp),
-            colors = ButtonDefaults.buttonColors(
-                contentColor = Color.White,
-                containerColor = colorResource(id = R.color.forest_essence)
-            ),border = BorderStroke(3.dp, colorResource(id = R.color.light_green))
-        ) {
-            Text(text = "Hollong App",fontSize = 20.sp)
-        }
-        Spacer(modifier=Modifier.weight(1f))
-
     }
 }
 
