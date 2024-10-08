@@ -77,7 +77,8 @@ fun HomeScreen(navController: NavController)
         {
             Text(text = "Hollong App", fontSize=20.sp)
         }
-
+        Spacer(modifier=Modifier.height(30.dp))
+        Text(text = "This app uses the Fused Location Provider API from Google Play services to provide location data.", fontFamily = FontFamily.SansSerif, modifier=Modifier.padding(16.dp))
         Row(
             modifier = Modifier
                 .fillMaxWidth()
