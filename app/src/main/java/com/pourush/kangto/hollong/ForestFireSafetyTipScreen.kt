@@ -10,9 +10,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.Scaffold
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Scaffold
+// import androidx.compose.material.rememberScaffoldState // Removed
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -62,10 +63,10 @@ fun ForestFireSafetyTipsScreen(navController: NavController) {
         }
         pop()
     }
-    val scaffoldState = rememberScaffoldState()
+    // val scaffoldState = rememberScaffoldState() // Removed
     Scaffold(
-        backgroundColor = colorResource(id = R.color.forest_essence),
-        scaffoldState = scaffoldState,
+        containerColor = colorResource(id = R.color.forest_essence), // Changed from backgroundColor
+        // scaffoldState = scaffoldState, // Removed
         topBar = {
             AppBarView(title = "Forest Fire Safety Tips",
                 onBackNavClicked = { navController.navigateUp() })
@@ -138,8 +139,8 @@ fun TipCard(tip: String) {
     Card(
         shape = RoundedCornerShape(10.dp),
         modifier = Modifier.fillMaxWidth(),
-        backgroundColor = colorResource(id = R.color.forest_essence),
-        elevation=10.dp
+        colors = CardDefaults.cardColors(containerColor = colorResource(id = R.color.forest_essence)), // Changed
+        elevation = CardDefaults.cardElevation(defaultElevation = 10.dp) // Changed
     ) {
         Text(
             text = tip,

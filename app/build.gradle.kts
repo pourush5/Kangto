@@ -1,18 +1,19 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.jetbrainsKotlinPluginCompose)
 }
 
 android {
     namespace = "com.pourush.kangto"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.pourush.kangto"
         minSdk = 25
         targetSdk = 35
-        versionCode = 3
-        versionName = "1.0.1"
+        versionCode = 4
+        versionName = "1.0.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -39,9 +40,7 @@ android {
     buildFeatures {
         compose = true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
-    }
+    // Removed composeOptions block
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -61,7 +60,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.runtime.livedata)
     implementation(libs.play.services.location)
-    implementation(libs.androidx.compose.material)
+    // implementation(libs.androidx.compose.material) // <- REMOVED THIS LINE
     implementation(libs.androidx.navigation.compose)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -70,15 +69,16 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.6")
-    implementation ("androidx.compose.ui:ui:1.0.5")
-    implementation ("androidx.compose.material:material:1.0.5")
-    implementation ("androidx.compose.ui:ui-tooling:1.0.5")
-    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.0")
-    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.0")
-    implementation ("androidx.datastore:datastore-preferences:1.1.1")
-    implementation ("androidx.fragment:fragment-ktx:1.3.0")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.9.3")
+    // Removed explicit versions for Compose UI, Material, and Tooling as they should be managed by BOM
+    // implementation ("androidx.compose.ui:ui:1.9.0")
+    // implementation ("androidx.compose.material:material:1.9.0")
+    // implementation ("androidx.compose.ui:ui-tooling:1.9.0")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.10.2")
+    implementation ("androidx.datastore:datastore-preferences:1.1.7")
+    implementation ("androidx.fragment:fragment-ktx:1.8.9")
 
 
 

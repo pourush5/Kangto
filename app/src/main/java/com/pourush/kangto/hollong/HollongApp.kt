@@ -17,14 +17,15 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Card
-import androidx.compose.material.IconButton
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -46,6 +47,7 @@ import com.pourush.kangto.Screen
 import kotlin.random.Random
 import androidx.compose.ui.graphics.Color as ComposeColor
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HollongApp(navController: NavController) {
     val context = LocalContext.current
@@ -64,21 +66,18 @@ fun HollongApp(navController: NavController) {
         backgroundColor = randomColor() // Change background color on each increment
     }
 
-    val scaffoldState = rememberScaffoldState()
     Scaffold(
-        backgroundColor = backgroundColor,
-        scaffoldState = scaffoldState,
+        containerColor = backgroundColor, // Changed from backgroundColor
         topBar = {
             AppBarView(title = "Hollong App",
                 onBackNavClicked = { navController.navigateUp() })
         },
-
-
-        ) {
+    ) { paddingValues -> // Renamed 'it' to 'paddingValues' for clarity
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(it).background(color = backgroundColor)
+                .padding(paddingValues) // Use paddingValues from Scaffold
+                .background(color = backgroundColor)
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
@@ -87,10 +86,10 @@ fun HollongApp(navController: NavController) {
             //Description of Buttons to increment Hollong Score
             Card(
                 shape = RoundedCornerShape(16.dp),
-                backgroundColor = Color.White,
+                colors = CardDefaults.cardColors(containerColor = Color.White), // Changed
                 modifier = Modifier
                     .padding(5.dp),
-                elevation = 8.dp
+                elevation = CardDefaults.cardElevation(defaultElevation = 8.dp) // Changed
             ) {
                 Row(
                     modifier = Modifier
@@ -109,10 +108,10 @@ fun HollongApp(navController: NavController) {
             }
             Card(
                 shape = RoundedCornerShape(16.dp),
-                backgroundColor = Color.White,
+                colors = CardDefaults.cardColors(containerColor = Color.White), // Changed
                 modifier = Modifier
                     .padding(5.dp),
-                elevation = 8.dp
+                elevation = CardDefaults.cardElevation(defaultElevation = 8.dp) // Changed
             ) {
                 Row(
                     modifier = Modifier
@@ -131,10 +130,10 @@ fun HollongApp(navController: NavController) {
             }
             Card(
                 shape = RoundedCornerShape(16.dp),
-                backgroundColor = Color.White,
+                colors = CardDefaults.cardColors(containerColor = Color.White), // Changed
                 modifier = Modifier
                     .padding(5.dp),
-                elevation = 8.dp
+                elevation = CardDefaults.cardElevation(defaultElevation = 8.dp) // Changed
             ) {
                 Row(
                     modifier = Modifier
@@ -155,18 +154,18 @@ fun HollongApp(navController: NavController) {
             // Display Hollong Score inside a CardView with dynamic background color
             Card(
                 shape = RoundedCornerShape(16.dp),
-                backgroundColor = Color.White,
+                colors = CardDefaults.cardColors(containerColor = Color.White), // Changed
                 modifier = Modifier
                     .padding(16.dp),
-                elevation = 8.dp
+                elevation = CardDefaults.cardElevation(defaultElevation = 8.dp) // Changed
             ) {
 
                 Card(
                     shape = RoundedCornerShape(16.dp),
-                    backgroundColor = colorResource(id = R.color.forest_essence),
+                    colors = CardDefaults.cardColors(containerColor = colorResource(id = R.color.forest_essence)), // Changed
                     modifier = Modifier
                         .padding(25.dp),
-                    elevation = 8.dp
+                    elevation = CardDefaults.cardElevation(defaultElevation = 8.dp) // Changed
                 ) {
                     Text(
                         text = "Hollong Score: $greenScore",
@@ -179,10 +178,10 @@ fun HollongApp(navController: NavController) {
             }
             Card(
                 shape = RoundedCornerShape(16.dp),
-                backgroundColor = Color.White,
+                colors = CardDefaults.cardColors(containerColor = Color.White), // Changed
                 modifier = Modifier
                     .padding(25.dp),
-                elevation = 8.dp
+                elevation = CardDefaults.cardElevation(defaultElevation = 8.dp) // Changed
             ) {
                 //Row containing actionables to increment Hollong Score
                 Row(

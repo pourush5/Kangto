@@ -19,14 +19,15 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.Scaffold
-import androidx.compose.material.TextField
-import androidx.compose.material.TextFieldDefaults
-import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -50,6 +51,7 @@ import com.pourush.kangto.R
 import com.pourush.kangto.SOSViewModel
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SOSButtonScreen(sosViewModel: SOSViewModel = viewModel(),navController: NavController) {
     val context = LocalContext.current
@@ -71,10 +73,8 @@ fun SOSButtonScreen(sosViewModel: SOSViewModel = viewModel(),navController: NavC
     var sosTriggered by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf("") }
 
-    val scaffoldState= rememberScaffoldState()
     Scaffold(
-        backgroundColor = Color.White,
-        scaffoldState=scaffoldState,
+        containerColor = Color.White,
         topBar = { AppBarView(title = "SOS!!",
             onBackNavClicked = {navController.navigateUp()})
         },
@@ -90,8 +90,8 @@ fun SOSButtonScreen(sosViewModel: SOSViewModel = viewModel(),navController: NavC
         ) {
             //Description
             Card(
-                backgroundColor = colorResource(R.color.forest_essence),
-                elevation = 10.dp,
+                colors = CardDefaults.cardColors(containerColor = colorResource(R.color.forest_essence)),
+                elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
                 shape = RoundedCornerShape(10.dp),
                 modifier = Modifier.padding(18.dp)
             ) {
@@ -125,12 +125,16 @@ fun SOSButtonScreen(sosViewModel: SOSViewModel = viewModel(),navController: NavC
                             isError = !isPhoneNumberValid,
                             modifier = Modifier.fillMaxWidth(),
                             textStyle = TextStyle(fontSize = 18.sp),
-                            colors = TextFieldDefaults.textFieldColors(
-                                textColor = Color.Blue,
-                                backgroundColor = Color.White,
+                            colors = TextFieldDefaults.colors( // This should be androidx.compose.material3.TextFieldDefaults.colors
+                                focusedTextColor = Color.Blue,
+                                unfocusedTextColor = Color.Blue,
+                                // containerColor = Color.White, // This was the incorrect M2-style mapping
+                                focusedContainerColor = Color.White,   // Corrected for M3
+                                unfocusedContainerColor = Color.White, // Corrected for M3
                                 cursorColor = Color.Blue,
                                 focusedIndicatorColor = colorResource(id = R.color.purple_700),
                                 unfocusedIndicatorColor = Color.Blue
+                                // You can also specify errorContainerColor, disabledContainerColor, etc., if needed
                             )
                         )
 
