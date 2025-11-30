@@ -1,4 +1,4 @@
-A2Z Bharat - Chapter A : Kangto
+A2Z Bharat - Chapter A : Kangto  (Play Store Link : https://play.google.com/store/apps/details?id=com.pourush.kangto)
 
 Inspired by the 'Land of Dawn-lit Mountains' Arunachal Pradesh.
 
